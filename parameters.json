@@ -1,0 +1,53 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "eastus"
+        },
+        "resourceGroup": {
+            "value": "example"
+        },
+        "azureFirewallName": {
+            "value": "Az-PR-FW01"
+        },
+        "azureFirewallTier": {
+            "value": "Premium"
+        },
+        "vnetName": {
+            "value": ""
+        },
+        "vnetAddressSpace": {
+            "value": ""
+        },
+        "vnetAddressSpaceV6": {
+            "value": ""
+        },
+        "subnetAddressSpace": {
+            "value": ""
+        },
+        "subnetAddressSpaceV6": {
+            "value": ""
+        },
+        "subnetId": {
+            "value": "/subscriptions/5cb3ee3f-37aa-44b3-90ee-dbbcc12c4cf1/resourceGroups/example/providers/Microsoft.Network/virtualNetworks/vnet-infra-prod-eastus-hub/subnets/AzureFirewallSubnet"
+        },
+        "managementSubnetId": {
+            "value": "/subscriptions/5cb3ee3f-37aa-44b3-90ee-dbbcc12c4cf1/resourceGroups/example/providers/Microsoft.Network/virtualNetworks/vnet-infra-prod-eastus-hub/subnets/AzureFirewallManagementSubnet"
+        },
+        "zones": {
+            "value": [
+                "1"
+            ]
+        },
+        "publicIpAddressName": {
+            "value": "az_pro_fw-pip01"
+        },
+        "publicIpAddressId": {
+            "value": "/subscriptions/5cb3ee3f-37aa-44b3-90ee-dbbcc12c4cf1/resourceGroups/example/providers/Microsoft.Network/publicIPAddresses/az_pro_fw-pip01"
+        },
+        "publicIpV6AddressName": {
+            "value": "IpV6Conf"
+        }
+    }
+}

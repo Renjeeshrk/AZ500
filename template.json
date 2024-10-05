@@ -1,0 +1,106 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string"
+        },
+        "resourceGroup": {
+            "type": "string"
+        },
+        "azureFirewallName": {
+            "type": "string"
+        },
+        "azureFirewallTier": {
+            "type": "string"
+        },
+        "vnetName": {
+            "type": "string"
+        },
+        "vnetAddressSpace": {
+            "type": "string"
+        },
+        "vnetAddressSpaceV6": {
+            "type": "string"
+        },
+        "subnetAddressSpace": {
+            "type": "string"
+        },
+        "subnetAddressSpaceV6": {
+            "type": "string"
+        },
+        "zones": {
+            "type": "array"
+        },
+        "subnetId": {
+            "type": "string"
+        },
+        "managementSubnetId": {
+            "type": "string"
+        },
+        "publicIpAddressId": {
+            "type": "string"
+        },
+        "publicIpAddressName": {
+            "type": "string"
+        },
+        "publicIpV6AddressName": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "networkApiVersion": "?api-version=2019-09-01"
+    },
+    "resources": [
+        {
+            "apiVersion": "2022-07-01",
+            "type": "Microsoft.Network/firewallPolicies",
+            "resources": [],
+            "properties": {
+                "sku": {
+                    "tier": "Premium"
+                },
+                "intrusionDetection": {
+                    "mode": "Off"
+                }
+            },
+            "name": "az_fw-policy01",
+            "location": "eastus",
+            "tags": {}
+        },
+        {
+            "apiVersion": "2020-05-01",
+            "type": "Microsoft.Network/azureFirewalls",
+            "name": "[parameters('azureFirewallName')]",
+            "location": "[parameters('location')]",
+            "zones": "[parameters('zones')]",
+            "dependsOn": [
+                "[resourceId(parameters('resourceGroup'), 'Microsoft.Network/firewallPolicies', 'az_fw-policy01')]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "[parameters('publicIpAddressName')]",
+                        "properties": {
+                            "subnet": {
+                                "id": "[parameters('subnetId')]"
+                            },
+                            "publicIpAddress": {
+                                "id": "[parameters('publicIpAddressId')]"
+                            }
+                        }
+                    }
+                ],
+                "sku": {
+                    "tier": "[parameters('azureFirewallTier')]"
+                },
+                "firewallPolicy": {
+                    "id": "[resourceId(parameters('resourceGroup'), 'Microsoft.Network/firewallPolicies', 'az_fw-policy01')]"
+                }
+            },
+            "tags": {
+                "environment": "Production"
+            }
+        }
+    ]
+}
